@@ -9,7 +9,7 @@ var stateModule = (function() {
     var wsLink; // Private Variable for WarSheet link
     
     var pub = {}; // public object - returned at end of module
-
+    
     // Changes the ClashCaller link
     pub.changeccLink = function(newstate) {
         ccLink = newstate;
@@ -31,6 +31,12 @@ var stateModule = (function() {
     return pub; // Exposes the requested variable
 }());
 
+    //time left in war
+function timer() {
+    var timeInHours = 24;
+    var currentTime = Date.parse(new Date());
+    var deadline = new Date(currentTime + timeInHours*60*60*1000);
+    }
 function respond() {
     var request = JSON.parse(this.req.chunks[0]),
     botCommands = /^\/commands/; // Prints a list of commands
@@ -41,6 +47,7 @@ function respond() {
     botPrintWS = /^\/ws/; // Prints the War Sheet
     botPrintCW = /^\/cw/; // Prints the ClashCaller and WarSheet together.
     botSalt = /^\/salt/; //Prints an image for salty sailors
+    botTime = /^\/timeleft/; //Prints time left in war
 
 //commands    
     if (request.text && botCommands.test(request.text)) {
@@ -52,6 +59,7 @@ function respond() {
                     /cc - Prints the ClashCaller link \n \
                     /setws - Sets the War Sheet \n \
                     /ws - Prints the War Sheet \n \
+                    /timeleft - Prints time left in war \n \
                     /cw - Prints the ClashCaller and War Sheet");
         this.res.end();
     }
@@ -65,6 +73,12 @@ function respond() {
         var someText = request.text.slice(7);
         this.res.writeHead(200);
         postMessage(checkccLink(someText));
+        this.res.end();
+// timer
+    } else if (request.text && botTime.test(request.text)) {
+        var someText = request.text.slice(7);
+        this.res.writeHead(200);
+        postMessage(timer(deadline));
         this.res.end();
 // salt
     } else if (request.text && botSalt.test(request.text)) {
