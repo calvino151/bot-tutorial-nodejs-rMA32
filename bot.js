@@ -40,12 +40,14 @@ function respond() {
     botSaveWS = /^\/setws/i; // Saves a War Sheet
     botPrintWS = /^\/ws/; // Prints the War Sheet
     botPrintCW = /^\/cw/; // Prints the ClashCaller and WarSheet together.
+    botSalt = /^\/salt/; //Prints an image for salty sailors
 
 //commands    
     if (request.text && botCommands.test(request.text)) {
         this.res.writeHead(200);
         postMessage("List of commands: \n \
                     /commands - Prints this list \n \
+                    /salt - When someone is being a salty sailor \n \
                     /setcc - Sets the ClashCaller link \n \
                     /cc - Prints the ClashCaller link \n \
                     /setws - Sets the War Sheet \n \
@@ -63,6 +65,12 @@ function respond() {
         var someText = request.text.slice(7);
         this.res.writeHead(200);
         postMessage(checkccLink(someText));
+        this.res.end();
+// salt
+    } else if (request.text && botSalt.test(request.text)) {
+        var someText = request.text.slice(7);
+        this.res.writeHead(200);
+        postMessage("https://i.imgur.com/B5BSVqH.png");
         this.res.end();
 // cc
     } else if (request.text && botPrintCC.test(request.text)) {
