@@ -47,7 +47,8 @@ function respond() {
     botPrintWS = /^\/ws/; // Prints the War Sheet
     botPrintCW = /^\/cw/; // Prints the ClashCaller and WarSheet together.
     botSalt = /^\/salt/; //Prints an image for salty sailors
-    botTime = /^\/timeleft/; //Prints time left in war
+    botTime = /^\/timeleft/; //Prints time left in war\
+    sbpredict = /^\/superbowl prediction/; //Prints carolina panthers
 
 //commands    
     if (request.text && botCommands.test(request.text)) {
@@ -79,6 +80,12 @@ function respond() {
         var someText = request.text.slice(7);
         this.res.writeHead(200);
         postMessage(timer(deadline));
+        this.res.end();
+// superbowl
+    } else if (request.text && sbpredict.test(request.text)) {
+        var someText = request.text.slice(7);
+        this.res.writeHead(200);
+        postMessage("Carolina Panthers will win");
         this.res.end();
 // salt
     } else if (request.text && botSalt.test(request.text)) {
